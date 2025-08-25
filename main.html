@@ -1,0 +1,1037 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TokenEase Hub - Revolutionary Queue Management</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --primary-dark: #3a56d4;
+            --secondary: #06d6a0;
+            --secondary-light: #0be9b6;
+            --accent: #ff6b6b;
+            --light: #f8fafc;
+            --dark: #1e293b;
+            --gray: #64748b;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --card-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
+            --transition: all 0.3s ease;
+            --gradient: linear-gradient(135deg, var(--primary), var(--secondary));
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: var(--dark);
+            background-color: #f8fafc;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header Styles */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            color: var(--dark);
+            padding: 15px 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            transition: var(--transition);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .logo i {
+            color: var(--secondary);
+            font-size: 2rem;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+        
+        nav a {
+            color: var(--dark);
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            position: relative;
+            padding: 5px 0;
+        }
+        
+        nav a:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: var(--gradient);
+            transition: var(--transition);
+            border-radius: 10px;
+        }
+        
+        nav a:hover {
+            color: var(--primary);
+        }
+        
+        nav a:hover:after {
+            width: 100%;
+        }
+        
+        .auth-buttons {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .btn {
+            padding: 12px 28px;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            font-size: 1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+        
+        .btn-outline:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(67, 97, 238, 0.3);
+        }
+        
+        .btn-primary {
+            background: var(--gradient);
+            color: white;
+            box-shadow: 0 10px 20px rgba(67, 97, 238, 0.3);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 25px rgba(67, 97, 238, 0.4);
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(255, 255, 255, 0.9), rgba(248, 250, 252, 0.9)), url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%234361ee" opacity="0.05"/><path d="M0 0L100 100" stroke="%234361ee" stroke-width="1" opacity="0.1"/><path d="M100 0L0 100" stroke="%234361ee" stroke-width="1" opacity="0.1"/></svg>');
+            padding: 160px 0 100px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-content {
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            line-height: 1.2;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 800;
+        }
+        
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 40px;
+            color: var(--gray);
+        }
+        
+        .floating-shapes {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            overflow: hidden;
+        }
+        
+        .shape {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.1;
+            animation: float 15s infinite linear;
+        }
+        
+        .shape-1 {
+            width: 300px;
+            height: 300px;
+            background: var(--primary);
+            top: -150px;
+            left: -150px;
+            animation-delay: 0s;
+        }
+        
+        .shape-2 {
+            width: 200px;
+            height: 200px;
+            background: var(--secondary);
+            bottom: -100px;
+            right: 10%;
+            animation-delay: -5s;
+        }
+        
+        .shape-3 {
+            width: 150px;
+            height: 150px;
+            background: var(--accent);
+            top: 30%;
+            right: -75px;
+            animation-delay: -10s;
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translateY(0) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-20px) rotate(180deg);
+            }
+            100% {
+                transform: translateY(0) rotate(360deg);
+            }
+        }
+        
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 60px;
+            margin: 60px 0;
+            flex-wrap: wrap;
+        }
+        
+        .stat-item {
+            text-align: center;
+            background: white;
+            padding: 25px;
+            border-radius: 20px;
+            box-shadow: var(--card-shadow);
+            transition: var(--transition);
+            min-width: 180px;
+        }
+        
+        .stat-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .stat-number {
+            font-size: 2.8rem;
+            font-weight: 800;
+            margin-bottom: 5px;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .stat-label {
+            font-size: 1rem;
+            color: var(--gray);
+        }
+        
+        /* Service Centers */
+        .section-title {
+            text-align: center;
+            margin: 80px 0 50px;
+            font-size: 2.5rem;
+            color: var(--dark);
+            position: relative;
+            font-weight: 800;
+        }
+        
+        .section-title:after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 5px;
+            background: var(--gradient);
+            margin: 15px auto;
+            border-radius: 3px;
+        }
+        
+        .centers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+        
+        .center-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+            transition: var(--transition);
+            position: relative;
+        }
+        
+        .center-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .center-image {
+            height: 200px;
+            background-color: var(--primary);
+            background-position: center;
+            background-size: cover;
+            position: relative;
+        }
+        
+        .center-image:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 50%;
+            background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+        }
+        
+        .center-content {
+            padding: 25px;
+        }
+        
+        .center-name {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--dark);
+            font-weight: 700;
+        }
+        
+        .center-details {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            align-items: center;
+        }
+        
+        .center-status {
+            display: inline-block;
+            padding: 8px 16px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+        
+        .status-open {
+            background: rgba(6, 214, 160, 0.2);
+            color: var(--success);
+        }
+        
+        .status-closed {
+            background: rgba(239, 68, 68, 0.2);
+            color: var(--danger);
+        }
+        
+        .center-wait {
+            color: var(--gray);
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        /* Live Dashboard */
+        .dashboard {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin: 60px 0;
+            box-shadow: var(--card-shadow);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        
+        .dashboard-title {
+            font-size: 1.8rem;
+            color: var(--dark);
+            font-weight: 700;
+        }
+        
+        .live-indicator {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+            color: var(--success);
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.6; }
+            100% { opacity: 1; }
+        }
+        
+        .counters {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+        
+        .counter-card {
+            background: var(--light);
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            transition: var(--transition);
+            border: 2px solid transparent;
+        }
+        
+        .counter-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .counter-number {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+        
+        .counter-name {
+            font-size: 1.1rem;
+            color: var(--gray);
+            margin-bottom: 10px;
+        }
+        
+        .current-token {
+            font-size: 1.4rem;
+            margin-top: 10px;
+            color: var(--success);
+            font-weight: 700;
+        }
+        
+        .token-list {
+            margin-top: 40px;
+        }
+        
+        .token-list-title {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: var(--dark);
+            font-weight: 700;
+        }
+        
+        .token-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px;
+            border-bottom: 1px solid #e2e8f0;
+            transition: var(--transition);
+        }
+        
+        .token-item:hover {
+            background: #f1f5f9;
+            border-radius: 10px;
+        }
+        
+        .token-number {
+            font-weight: 700;
+            color: var(--primary);
+            font-size: 1.2rem;
+        }
+        
+        .token-service {
+            color: var(--gray);
+        }
+        
+        .token-status {
+            padding: 8px 16px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+        
+        .status-waiting {
+            background: rgba(245, 158, 11, 0.2);
+            color: var(--warning);
+        }
+        
+        .status-processing {
+            background: rgba(67, 97, 238, 0.2);
+            color: var(--primary);
+        }
+        
+        /* Booking Process */
+        .booking-process {
+            background: var(--gradient);
+            color: white;
+            padding: 80px 0;
+            margin: 80px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .process-steps {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 60px;
+            flex-wrap: wrap;
+            gap: 40px;
+        }
+        
+        .step {
+            text-align: center;
+            max-width: 250px;
+            padding: 30px 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            transition: var(--transition);
+            position: relative;
+            z-index: 2;
+        }
+        
+        .step:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-10px);
+        }
+        
+        .step-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: white;
+        }
+        
+        .step-title {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 80px 0 30px;
+            position: relative;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 50px;
+        }
+        
+        .footer-logo {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .footer-about p {
+            color: #cbd5e1;
+            margin-top: 15px;
+        }
+        
+        .footer-links h3 {
+            font-size: 1.4rem;
+            margin-bottom: 25px;
+            position: relative;
+            padding-bottom: 12px;
+            color: white;
+        }
+        
+        .footer-links h3:after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50px;
+            height: 4px;
+            background: var(--gradient);
+            border-radius: 2px;
+        }
+        
+        .footer-links ul {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .footer-links a {
+            color: #cbd5e1;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .footer-links a:hover {
+            color: var(--secondary-light);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid #334155;
+            color: #94a3b8;
+            font-size: 1rem;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 968px) {
+            .header-content {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            nav ul {
+                gap: 20px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .hero h1 {
+                font-size: 2.8rem;
+            }
+            
+            .stats {
+                gap: 30px;
+            }
+            
+            .process-steps {
+                flex-direction: column;
+                align-items: center;
+                gap: 30px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .centers-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .counters {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero h1 {
+                font-size: 2.3rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .stats {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .stat-item {
+                width: 100%;
+            }
+        }
+        
+        /* Animation utilities */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <i class="fas fa-ticket-alt"></i>
+                <span>TokenEase Hub</span>
+            </div>
+            
+            <nav>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Services</a></li>
+                    <li><a href="#">Locations</a></li>
+                    <li><a href="#">Dashboard</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </nav>
+            
+            <div class="auth-buttons">
+                <button class="btn btn-outline"><i class="fas fa-sign-in-alt"></i> Login</button>
+                <button class="btn btn-primary"><i class="fas fa-user-plus"></i> Register</button>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="floating-shapes">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+            <div class="shape shape-3"></div>
+        </div>
+        
+        <div class="container hero-content">
+            <h1>Revolutionary Queue Management for Modern Service Centers</h1>
+            <p>Skip the wait, save time, and experience seamless service with our advanced digital token system</p>
+            <button class="btn btn-primary"><i class="fas fa-ticket-alt"></i> Book Your Token Now</button>
+            
+            <div class="stats">
+                <div class="stat-item fade-in">
+                    <div class="stat-number">50K+</div>
+                    <div class="stat-label">Tokens Issued</div>
+                </div>
+                <div class="stat-item fade-in">
+                    <div class="stat-number">120+</div>
+                    <div class="stat-label">Service Centers</div>
+                </div>
+                <div class="stat-item fade-in">
+                    <div class="stat-number">95%</div>
+                    <div class="stat-label">Customer Satisfaction</div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Service Centers -->
+    <section class="container">
+        <h2 class="section-title">Our Service Centers</h2>
+        
+        <div class="centers-grid">
+            <!-- Center 1 -->
+            <div class="center-card fade-in">
+                <div class="center-image" style="background-image: url('https://images.unsplash.com/photo-1563013546-7e5c46e2515a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80');"></div>
+                <div class="center-content">
+                    <h3 class="center-name">Main Branch Banking Center</h3>
+                    <div class="center-details">
+                        <span class="center-status status-open">Open</span>
+                        <span class="center-wait"><i class="fas fa-clock"></i> Avg. Wait: 15 min</span>
+                    </div>
+                    <p><i class="fas fa-map-marker-alt"></i> 123 Financial District, City Center</p>
+                    <button class="btn btn-primary" style="margin-top: 20px; width: 100%;"><i class="fas fa-ticket-alt"></i> Book Token</button>
+                </div>
+            </div>
+            
+            <!-- Center 2 -->
+            <div class="center-card fade-in">
+                <div class="center-image" style="background-image: url('https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1153&q=80');"></div>
+                <div class="center-content">
+                    <h3 class="center-name">Central Healthcare Clinic</h3>
+                    <div class="center-details">
+                        <span class="center-status status-open">Open</span>
+                        <span class="center-wait"><i class="fas fa-clock"></i> Avg. Wait: 25 min</span>
+                    </div>
+                    <p><i class="fas fa-map-marker-alt"></i> 456 Health Avenue, Medical District</p>
+                    <button class="btn btn-primary" style="margin-top: 20px; width: 100%;"><i class="fas fa-ticket-alt"></i> Book Token</button>
+                </div>
+            </div>
+            
+            <!-- Center 3 -->
+            <div class="center-card fade-in">
+                <div class="center-image" style="background-image: url('https://images.unsplash.com/photo-1590650516494-0c8e4a4dd67b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1171&q=80');"></div>
+                <div class="center-content">
+                    <h3 class="center-name">Government Services Hub</h3>
+                    <div class="center-details">
+                        <span class="center-status status-closed">Closed</span>
+                        <span class="center-wait"><i class="fas fa-clock"></i> Opens at 9:00 AM</span>
+                    </div>
+                    <p><i class="fas fa-map-marker-alt"></i> 789 Civic Center, Downtown</p>
+                    <button class="btn btn-primary" style="margin-top: 20px; width: 100%;" disabled><i class="fas fa-ticket-alt"></i> Book Token</button>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Live Dashboard -->
+    <section class="container">
+        <h2 class="section-title">Live Token Dashboard</h2>
+        
+        <div class="dashboard fade-in">
+            <div class="dashboard-header">
+                <h3 class="dashboard-title">Main Branch Banking Center</h3>
+                <div class="live-indicator">
+                    <i class="fas fa-circle"></i>
+                    <span>LIVE UPDATES</span>
+                </div>
+            </div>
+            
+            <div class="counters">
+                <div class="counter-card">
+                    <div class="counter-number">C01</div>
+                    <div class="counter-name">Cash Transactions</div>
+                    <div class="current-token">T103</div>
+                </div>
+                
+                <div class="counter-card">
+                    <div class="counter-number">C02</div>
+                    <div class="counter-name">Account Services</div>
+                    <div class="current-token">T087</div>
+                </div>
+                
+                <div class="counter-card">
+                    <div class="counter-number">C03</div>
+                    <div class="counter-name">Loans & Mortgages</div>
+                    <div class="current-token">T112</div>
+                </div>
+                
+                <div class="counter-card">
+                    <div class="counter-number">C04</div>
+                    <div class="counter-name">Customer Service</div>
+                    <div class="current-token">T095</div>
+                </div>
+            </div>
+            
+            <div class="token-list">
+                <h4 class="token-list-title">Next in Queue</h4>
+                
+                <div class="token-item">
+                    <div>
+                        <div class="token-number">T104</div>
+                        <div class="token-service">Cash Transactions</div>
+                    </div>
+                    <span class="token-status status-waiting">Waiting</span>
+                </div>
+                
+                <div class="token-item">
+                    <div>
+                        <div class="token-number">T088</div>
+                        <div class="token-service">Account Services</div>
+                    </div>
+                    <span class="token-status status-waiting">Waiting</span>
+                </div>
+                
+                <div class="token-item">
+                    <div>
+                        <div class="token-number">T113</div>
+                        <div class="token-service">Loans & Mortgages</div>
+                    </div>
+                    <span class="token-status status-processing">Processing</span>
+                </div>
+                
+                <div class="token-item">
+                    <div>
+                        <div class="token-number">T096</div>
+                        <div class="token-service">Customer Service</div>
+                    </div>
+                    <span class="token-status status-waiting">Waiting</span>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Booking Process -->
+    <section class="booking-process">
+        <div class="container">
+            <h2 class="section-title" style="color: white;">How It Works</h2>
+            
+            <div class="process-steps">
+                <div class="step fade-in">
+                    <div class="step-icon">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <h3 class="step-title">Select Center</h3>
+                    <p>Choose from our network of service centers</p>
+                </div>
+                
+                <div class="step fade-in">
+                    <div class="step-icon">
+                        <i class="fas fa-ticket-alt"></i>
+                    </div>
+                    <h3 class="step-title">Book Token</h3>
+                    <p>Select service type and book your digital token</p>
+                </div>
+                
+                <div class="step fade-in">
+                    <div class="step-icon">
+                        <i class="fas fa-bell"></i>
+                    </div>
+                    <h3 class="step-title">Get Notified</h3>
+                    <p>Receive alerts about your token status</p>
+                </div>
+                
+                <div class="step fade-in">
+                    <div class="step-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <h3 class="step-title">Get Service</h3>
+                    <p>Visit when your turn arrives for quick service</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-about">
+                    <div class="footer-logo">
+                        <i class="fas fa-ticket-alt"></i>
+                        <span>TokenEase Hub</span>
+                    </div>
+                    <p>Revolutionizing queue management for service centers with our advanced digital token system.</p>
+                </div>
+                
+                <div class="footer-links">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><i class="fas fa-chevron-right"></i> <a href="#">Home</a></li>
+                        <li><i class="fas fa-chevron-right"></i> <a href="#">Services</a></li>
+                        <li><i class="fas fa-chevron-right"></i> <a href="#">Locations</a></li>
+                        <li><i class="fas fa-chevron-right"></i> <a href="#">Dashboard</a></li>
+                        <li><i class="fas fa-chevron-right"></i> <a href="#">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-links">
+                    <h3>Services</h3>
+                    <ul>
+                        <li><i class="fas fa-chevron-right"></i> <a href="#">Banking</a></li>
+                        <li><i class="fas fa-chevron-right"></i> <a href="#">Healthcare</a></li>
+                        <li><i class="fas fa-chevron-right"></i> <a href="#">Government</a></li>
+                        <li><i class="fas fa-chevron-right"></i> <a href="#">Retail</a></li>
+                        <li><i class="fas fa-chevron-right"></i> <a href="#">Telecom</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-links">
+                    <h3>Contact Us</h3>
+                    <ul>
+                        <li><i class="fas fa-map-marker-alt"></i> 123 Tech Park, Innovation City</li>
+                        <li><i class="fas fa-phone"></i> +91 98765 43210</li>
+                        <li><i class="fas fa-envelope"></i> info@tokenease.com</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2023 TokenEase Hub. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        // Animation for stats counter
+        function animateCounter(element, target, duration) {
+            let start = 0;
+            const increment = target / (duration / 16);
+            const updateCounter = () => {
+                start += increment;
+                if (start < target) {
+                    element.innerText = Math.ceil(start);
+                    requestAnimationFrame(updateCounter);
+                } else {
+                    element.innerText = target;
+                }
+            };
+            updateCounter();
+        }
+        
+        // Scroll animation for elements
+        function checkScroll() {
+            const elements = document.querySelectorAll('.fade-in');
+            elements.forEach(element => {
+                const position = element.getBoundingClientRect();
+                if (position.top < window.innerHeight - 100) {
+                    element.classList.add('visible');
+                }
+            });
+        }
+        
+        // Animate stats when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            const statNumbers = document.querySelectorAll('.stat-number');
+            animateCounter(statNumbers[0], 50000, 2000);
+            animateCounter(statNumbers[1], 120, 1500);
+            animateCounter(statNumbers[2], 95, 1000);
+            
+            // Initial check for scroll position
+            checkScroll();
+        });
+        
+        // Check scroll position on scroll
+        window.addEventListener('scroll', checkScroll);
+    </script>
+</body>
+</html>
